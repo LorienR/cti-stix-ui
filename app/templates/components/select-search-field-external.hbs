@@ -1,0 +1,60 @@
+{{#if selected}}
+  {{#if placeholder}}
+    <label>{{placeholder}}</label>
+  {{/if}}
+{{/if}}
+{{#power-select selected=selected
+                placeholder=placeholder
+                search=search
+                onchange=(action (mut selected)) as |selected|}}
+{{get selected labelField}}
+{{/power-select}}
+
+<p>
+  {{#each selections as |selection|}}
+    <span class="chip">
+      {{get selection labelField}}
+      {{fa-icon "times" class="pointer" click=(action "removeSelection" selection)}}
+    </span>
+  {{/each}}
+</p>
+
+{{#each selections as |selection|}}
+
+  {{#md-card title=selection.name}}
+    {{#md-card-content}}
+    <h5>External References</h5>
+
+    <div class="row">
+    <div class="col s1">
+        {{md-btn text="Add" action="addExternalReference" actionArg=selection}}
+    </div>
+    </div>
+      {{#each selection.external_references as |externalReference|}}
+
+  
+      <div class="row">
+        {{md-input label="External ID"
+                   value=externalReference.external_id
+                   validate=true
+                   class="col s2"}}
+        {{md-input label="Source Name"
+                   value=externalReference.source_name
+                   validate=true
+                   class="col s4"}}
+        {{md-input label="URL"
+                   value=externalReference.url
+                   validate=true
+                   class="col s6"}}
+      </div>
+
+      {{md-btn text="Remove" action="removeExternalReference" actionArg=externalReference}}
+
+
+{{/each}}
+
+      {{md-btn text="Remove" action="removeSelection" actionArg=selection}}
+    {{/md-card-content}}
+  {{/md-card}}
+
+{{/each}}

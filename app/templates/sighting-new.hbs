@@ -1,0 +1,72 @@
+<div class="container">
+{{help-card help=model.help}}
+
+  <h4>
+  <img class='stix-icon' src='{{get-stix-icon-url "relationship"}}'>
+    Sighting
+  </h4>
+
+  <div class="row">
+    <div class="col s6">
+      {{md-select 
+        content=model.types
+        value=model.item.sighting_of_ref
+        label="Source Type"
+        prompt="Please choose..."
+        optionLabelPath="content.label"
+        optionValuePath="content.id"}}
+    </div>
+  </div>
+  
+
+  <label>Where Sighted References</label>
+  
+  {{md-switches
+    selection=model.item.where_sighted_refs
+    content=model.identities
+    optionValuePath="id"
+    optionLabelPath="name"
+    class="col s6"
+  }}
+
+  <div class="row">
+
+    {{md-textarea label="Summary"
+                  value=model.item.summary
+                  class="col s12"}}
+  </div>
+  <div class="row">
+
+    {{md-input label="Count"
+            value=model.item.count
+            required=true
+            validate=true
+            class="col s4 m3"}}
+     {{input-date-field label="First Seen"
+             dateValue=model.item.first_seen
+             required=false
+             validate=true
+             class="col s4 m3"}}
+     {{input-date-field label="Last Seen"
+             dateValue=model.item.last_seen
+             required=false
+             validate=true
+             class="col s4 m3"}}             
+  </div>
+
+  <div class="row">  
+    <div class="col s12 right-align">
+      <div class="option-button-column-right">
+        <button {{action "save" model.item false}} class="btn waves-effect waves-light"><i class="fa fa-save"></i><span class="fa-button-text">Save &amp; Close</span></button>
+      </div>
+      <div class="option-button-column-right">
+        {{#link-to "sightings" title="Cancel" class="btn waves-effect waves-light"}}
+          <i class="fa fa-arrow-left"></i><span class="fa-button-text">Cancel</span>
+        {{/link-to}}
+      </div>
+    </div>
+  </div>
+
+  {{alert-card alert=model.alert}}
+
+</div>

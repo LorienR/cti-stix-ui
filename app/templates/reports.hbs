@@ -1,0 +1,35 @@
+<div class="container">
+{{help-card help=model.help}}
+<h4>
+    <img class='stix-icon' src='{{get-stix-icon-url "report"}}'>
+  Reports
+</h4>
+
+  <div class="row">
+    <div class="col s6">
+      <div class="option-button-column-left">
+        {{#link-to "report-new" class="btn waves-effect waves-light"}}
+          <i class="fa fa-plus"></i><span class="fa-button-text">New</span>
+        {{/link-to}}
+      </div>
+      <div class="option-button-column-left">
+          <button onclick={{if model.items (action "downloadBundle" model.items)}} class="btn {{if model.items "waves-effect waves-light" "btn grey lighten-1"}} "><i class="fa fa-download"></i><span class="fa-button-text">Download</span></button>
+      </div>
+    </div>
+    <div class="col s6 right-align">
+      <span class="right-align">Results: {{model.items.length}}</span>
+    </div>
+  </div>
+
+{{#md-collection content=model.items as |item|}}
+  <div class="collection-item">
+    {{item.name}} {{#each item.labels as |label|}}<img class='stix-icon' src='{{get-stix-icon-url label}}'>{{/each}}
+
+    <div class="secondary-content">
+      {{#link-to (query-params deleteObjectId=item.id) class="red-text" title="Delete Record"}}
+        <i class="material-icons">delete</i>
+      {{/link-to}}
+    </div>
+  </div>
+{{/md-collection}}
+</div>

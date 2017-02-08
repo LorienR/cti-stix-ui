@@ -1,0 +1,127 @@
+<div class="container">
+{{help-card help=model.help}}
+
+<h4>
+  <img class='stix-icon' src='{{get-stix-icon-url "campaign"}}'>
+  Campaign
+</h4>
+
+<div class="row">
+  <div class="col">
+    <div class="option-button-column-left">
+        {{#link-to "campaign-edit" model.item.id title="Edit" class="btn waves-effect waves-light"}}
+          <i class="fa fa-pencil"></i><span class="fa-button-text">Edit</span>
+        {{/link-to}}  
+      </div>
+      <div class="option-button-column-left">
+        {{#link-to (query-params onDeleteNavigateTo='campaigns') title="Delete" class="btn waves-effect waves-light red"}}
+            <i class="fa fa-trash"></i><span class="fa-button-text">Delete</span>
+        {{/link-to}}
+      </div>
+  </div>
+</div>
+
+{{#md-card id=model.item.id}}
+    {{#md-card-content}}
+
+      <div class="row">
+        <div class="col s6 m6">
+          <label>Name</label>
+          <p>{{model.item.name}}</p>
+        </div>
+        <div class="col s4 m4">
+          <label>First Seen</label>
+          <p>{{moment-format model.item.first_seen "YYYY-MM-DD"}}</p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <label>Objective</label>
+          <p>{{model.item.objective}}</p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <label>Identities</label>
+          <div>
+          {{#if model.item.identities}}
+              {{#each model.item.identities as |identity|}}
+                <div class="chip orange" title="Identity">{{identity.name}}</div>
+              {{/each}}
+          {{/if}}
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <label>Intrusion Set</label>
+          <div>
+          {{#if model.item.intrusionSets}}
+              {{#each model.item.intrusionSets as |intrusionSet|}}
+                <div class="chip blue" title="Threat Actor">{{intrusionSet.name}}</div>
+              {{/each}}
+          {{/if}}
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <label>Attack Patterns</label>
+          <div>
+          {{#if model.item.attackPatterns}}
+              {{#each model.item.attackPatterns as |attackPattern|}}
+                <div class="chip red" title="Attack Pattern">{{attackPattern.name}}</div>
+              {{/each}}
+          {{/if}}
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <label>Indicators</label>
+          <div>
+          {{#if model.item.indicators}}
+              {{#each model.item.indicators as |indicator|}}
+                <div class="chip green" title="Indicator">{{indicator.name}}</div>
+              {{/each}}
+          {{/if}}
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <label>Description</label>
+          <p>{{model.item.description}}</p>
+        </div>
+      </div>
+
+    {{/md-card-content}}
+{{/md-card}}
+<div class="right-align grey-text">{{model.item.id}}</div>
+
+{{!--<h4>Relationships</h4>
+{{#each model.targetRelationshipObjects as |relatedObject|}}
+  <p>
+    <div class="chip">{{relatedObject.type}}</div>
+    {{#link-to relatedObject.type relatedObject.id}}
+      {{relatedObject.name}}
+    {{/link-to}}
+  </p>
+{{/each}}
+
+{{#each model.sourceRelationshipObjects as |relatedObject|}}
+  <p>
+    <div class="chip">{{relatedObject.type}}</div>
+    {{#link-to relatedObject.type relatedObject.id}}
+      {{relatedObject.name}}
+    {{/link-to}}
+  </p>
+{{/each}}--}}
+
+</div>

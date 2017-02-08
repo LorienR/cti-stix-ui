@@ -1,0 +1,44 @@
+<div class="container">
+{{help-card help=model.help}}
+<h4>
+    <img class='stix-icon' src='{{get-stix-icon-url "threat-actor"}}'>
+  Intrusion Sets
+</h4>
+
+  <div class="row">
+    <div class="col s6">
+      <div class="option-button-column-left">
+        {{#link-to "intrusion-set-new" id="new-item" class="btn waves-effect waves-light"}}
+          <i class="fa fa-plus"></i><span class="fa-button-text">New</span>
+        {{/link-to}}
+      </div>
+      <div class="option-button-column-left">
+          <button onclick={{if model.items (action "downloadBundle" model.items)}} class="btn {{if model.items "waves-effect waves-light" "btn grey lighten-1"}} "><i class="fa fa-download"></i><span class="fa-button-text">Download</span></button>
+      </div>
+    </div>
+    <div class="col s6 right-align">
+      <span class="right-align">Results: {{model.items.length}}</span>
+    </div>
+  </div>
+
+{{#md-collection content=model.items as |item|}}
+  <div class="collection-item list-collection-item">
+    {{#link-to "intrusion-set" item.id}}
+        {{item.name}}
+      {{/link-to}}
+
+    <div class="secondary-content">  
+      <div class="option-button-column-right">
+        {{#link-to (query-params deleteObjectId=item.id) class="btn btn-small waves-effect waves-light red"}}
+          <i class="fa fa-trash"></i>
+        {{/link-to}}
+      </div>
+      <div class="option-button-column-right">
+        {{#link-to "intrusion-set-edit" item.id title="Edit" class="btn btn-small waves-effect waves-light"}}
+          <i class="fa fa-pencil"></i>
+        {{/link-to}}  
+      </div>    
+    </div>
+  </div>
+{{/md-collection}}
+</div>

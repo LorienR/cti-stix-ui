@@ -1,0 +1,54 @@
+<div class="container">
+{{help-card help=model.help}}
+  <h4>
+  <img class='stix-icon' src='{{get-stix-icon-url "relationship"}}'>
+    Relationship
+  </h4>
+
+  {{object-type-select
+    typeLabel="Source Type"
+    objectLabel="Source"
+    typePrompt="Select Source Type..."
+    types=model.types
+    typeValue=model.sourceType
+    objects=model.sources
+    objectValue=model.item.source_ref
+    objectLabelPath="name"
+    onTypeValueChanged=(action "typeValueChanged" "model.sources" "model.item.source_ref")
+  }}
+
+  <div class="row">
+    {{md-input label="Relationship Type"
+            value=model.item.relationship_type
+            required=true
+            validate=true
+            class="col s12"}}
+  </div>
+
+  {{object-type-select
+    typeLabel="Target Type"
+    objectLabel="Target"
+    typePrompt="Select Target Type..."
+    types=model.types
+    typeValue=model.targetType
+    objects=model.targets
+    objectValue=model.item.target_ref
+    objectLabelPath="name"
+    onTypeValueChanged=(action "typeValueChanged" "model.targets" "model.item.target_ref")
+  }}
+
+  <div class="row">
+    {{md-textarea label="Description"
+                  value=model.item.description
+                  class="col s12"}}
+  </div>
+
+  <div class="row">
+    <div class="col s12 right-align">
+      {{md-btn text="Save" action="save" actionArg=model.item}}
+    </div>
+  </div>
+
+  {{alert-card alert=model.alert}}
+
+</div>
