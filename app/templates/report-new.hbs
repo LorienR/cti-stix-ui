@@ -1,0 +1,112 @@
+<div class="container">
+  {{help-card help=model.help}}
+  <h4>
+  <img class='stix-icon' src='{{get-stix-icon-url "report"}}'>
+    Report
+  </h4>
+
+  <div class="row">
+    <div class="col s12 m9">
+      {{md-input label="Name"
+                 value=model.item.name
+                 required=true
+                 validate=true}}
+    </div>
+    <div class="col s12 m3">
+      {{input-date-field label="Published"
+                         dateValue=model.item.published
+                         errors=model.errors.published}}
+    </div>
+  </div>
+  <div class="row">
+    {{md-textarea label="Description"
+                  value=model.item.description
+                  class="col s12"}}
+  </div>
+
+  <div class="row">
+    {{select-search-field placeholder="Intrusion Set"
+                          search=(action "searchIntrusionSets")
+                          selections=model.intrusionSets
+                          labelField="name"
+                          class="col s12"}}
+  </div>
+
+  <div class="row">
+    {{select-search-field placeholder="Attack Patterns"
+                          search=(action "searchAttackPatterns")
+                          selections=model.attackPatterns
+                          labelField="name"
+                          class="col s12"}}
+  </div>
+
+  <div class="row">
+    {{indicator-pattern-field indicators=model.indicators}}
+  </div>
+
+  <div class="row">
+    <div class="col s12">Labels</div>
+  </div>
+  <div class="row">
+
+    {{md-checks
+      selection=model.item.labels
+      content=model.labels
+      optionValuePath="id"
+      optionLabelPath="label"
+      class="col s12"
+    }}
+  </div>
+        
+
+  
+    <h5>External References</h5>
+
+  <div class="row">
+    <div class="col s1">
+      {{md-btn text="Add" action="addExternalReference" actionArg=model.item}}
+    </div>
+  </div>
+
+  {{#each model.item.external_references as |externalReference|}}
+
+    {{#md-card title=externalReference.external_id}}
+      {{#md-card-content}}
+        <div class="row">
+          {{md-input label="External ID"
+                    value=externalReference.external_id
+                    validate=true
+                    class="col s2"}}
+          {{md-input label="Source Name"
+                    value=externalReference.source_name
+                    validate=true
+                    class="col s4"}}
+          {{md-input label="URL"
+                    value=externalReference.url
+                    validate=true
+                    class="col s6"}}
+        </div>
+      {{/md-card-content}}
+      {{#md-card-action}}
+        {{md-btn text="Remove" action="removeExternalReference" actionArg=externalReference}}
+      {{/md-card-action}}
+    {{/md-card}}
+
+  {{/each}}
+
+  <div class="row">  
+    <div class="col s12 right-align">
+      <div class="option-button-column-right">
+        <button {{action "save" model.item false}} class="btn waves-effect waves-light"><i class="fa fa-save"></i><span class="fa-button-text">Save &amp; Close</span></button>
+      </div>
+      <div class="option-button-column-right">
+        {{#link-to "reports" title="Cancel" class="btn waves-effect waves-light"}}
+          <i class="fa fa-arrow-left"></i><span class="fa-button-text">Cancel</span>
+        {{/link-to}}
+      </div>
+    </div>
+  </div>
+
+  {{alert-card alert=model.alert}}
+
+</div>

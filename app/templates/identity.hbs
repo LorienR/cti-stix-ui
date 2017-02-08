@@ -1,0 +1,95 @@
+<div class="container">
+{{help-card help=model.help}}
+
+<h4>
+  <img class='stix-icon' src='{{get-stix-icon-url "identity"}}'>
+  Identity
+</h4>
+
+<div class="row">
+  <div class="col">
+    <div class="option-button-column-left">
+        {{#link-to "identity-edit" model.item.id title="Edit" class="btn waves-effect waves-light"}}
+          <i class="fa fa-pencil"></i><span class="fa-button-text">Edit</span>
+        {{/link-to}}
+      </div>
+      <div class="option-button-column-left">
+        {{#link-to (query-params onDeleteNavigateTo='identities') title="Delete" class="btn waves-effect waves-light red"}}
+          <i class="fa fa-trash"></i><span class="fa-button-text">Delete</span>
+        {{/link-to}}
+      </div>
+  </div>
+</div> 
+
+{{#md-card id=model.item.id}}
+    {{#md-card-content}}
+
+    <div class="row">
+      <div class="col">
+        <label>Name</label>
+        <p>{{model.item.name}}</p>
+      </div>
+    </div> 
+
+    <div class="row">
+      <div class="col">
+        <label>Description</label>
+        <p>{{model.item.description}}</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <label>Identity Class</label>
+        <p>{{model.item.identity_class}}</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <label>Sector</label>
+        <div>
+          {{#each model.item.sectors as |sector|}}        
+            <div class="chip purple" title="Sector">{{sector}}</div>        
+          {{/each}}
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <label>Labels</label>
+        <div>
+        {{#if model.item.labelNames}}
+            {{#each model.item.labelNames as |label|}}
+              <div class="chip green" title="Label">{{label.name}}</div>
+            {{/each}}
+        {{/if}}
+        </div>
+      </div>
+    </div>
+  
+    <div class="row">
+      <div class="col">
+        <label>External References</label>
+        <div>
+          {{#if model.item.external_references}}
+              {{#each model.item.external_references as |external_reference|}}
+                <div class="chip" title="External Reference">
+                  {{#if external_reference.url}}
+                    <a target="_blank" href="{{external_reference.url}}">{{external_reference.source_name}}</a>
+                  {{else}}
+                    {{external_reference.source_name}}
+                  {{/if}}
+                </div>
+                
+              {{/each}}
+          {{/if}}
+        </div>
+      </div>
+    </div>
+    {{/md-card-content}}
+{{/md-card}}
+<div class="right-align grey-text">{{model.item.id}}</div>
+
+</div>

@@ -1,0 +1,41 @@
+<div class="container">
+  {{help-card help=model.help}}
+  <h4>
+  <img class='stix-icon' src='{{get-stix-icon-url "relationship"}}'>
+    Mapping Course of Action to Attack Patterns
+  </h4>
+
+  {{#each relationshipArray as |relationshipGroup|}}
+    <div class="row">
+      <div class="col s12">
+    {{#md-card  class="card-title" 
+                title=relationshipGroup.phaseName 
+                id=relationshipGroup.phaseName}}
+        {{#md-card-content class="card-description"}}
+          <table class="highlight">
+            <thead>
+              <tr>
+                <th> </th>
+                  {{#each model.courseOfActions as |courseOfAction|}}
+                    <th class=rotate data-field="name"><div><span>{{courseOfAction.name}}</span></div></th>
+                  {{/each}}
+                </tr>
+            </thead>
+            <tbody>
+              {{#each relationshipGroup.items as |attackGroup|}}
+                <tr>
+                  <td>{{attackGroup.attackPatternName}}</td>
+                    {{#each attackGroup.items as |relationshipObj|}}
+                      <td {{action "clickRelationship" relationshipObj}}>
+                        <i class="material-icons">{{if relationshipObj.selected "done" "stop"}}</i>
+                      </td>
+                    {{/each}}
+                </tr>
+              {{/each}}
+            </tbody>
+          </table>
+      {{/md-card-content}}
+    {{/md-card}}
+    </div></div>
+  {{/each}}
+</div>

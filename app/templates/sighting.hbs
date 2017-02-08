@@ -1,0 +1,86 @@
+<div class="container">
+{{help-card help=model.help}}
+
+<h4>
+   <img class='stix-icon' src='{{get-stix-icon-url "relationship"}}'>
+  Sighting
+</h4>
+
+<div class="row">
+  <div class="col">
+    <div class="option-button-column-left">
+        {{#link-to "sighting-edit" model.item.id title="Edit" class="btn waves-effect waves-light"}}
+          <i class="fa fa-pencil"></i><span class="fa-button-text">Edit</span>
+        {{/link-to}}
+      </div>
+      <div class="option-button-column-left">
+        {{#link-to (query-params onDeleteNavigateTo='sightings') title="Delete" class="btn waves-effect waves-light red"}}
+          <i class="fa fa-trash"></i><span class="fa-button-text">Delete</span>
+        {{/link-to}}
+      </div>
+  </div>
+</div> 
+
+{{#md-card id=model.item.id}}
+    {{#md-card-content}}
+
+    <div class="row">
+      <div class="col">
+        <label>Source Type</label>
+        <p>{{model.item.sighting_of_ref}}</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <label>Where Sighted References</label>
+        <div>
+        {{#if model.item.where_sighted_refs}}
+            {{#each model.item.where_sighted_refs as |where_sighted|}}
+              <div class="chip orange" title="Where Sighted Ref">{{where_sighted}}</div>
+            {{/each}}
+        {{/if}}
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <label>Summary</label>
+        <p>{{model.item.summary}}</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col s4 m3">
+        <label>Count</label>
+        <p>{{model.item.count}}</p>
+      </div>
+      <div class="col s4 m3">
+        <label>First Seen</label>
+        <p>{{moment-format model.item.first_seen "YYYY-MM-DD"}}</p>
+      </div>
+      <div class="col s4 m3">
+        <label>Last Seen</label>
+        <p>{{moment-format model.item.last_seen "YYYY-MM-DD"}}</p>
+      </div>
+    </div>
+
+    {{/md-card-content}}
+{{/md-card}}
+<div class="right-align grey-text">{{model.item.id}}</div>
+
+{{!--<h4>Relationships</h4>
+{{#each model.targetRelationshipObjects as |relatedObject|}}
+  <p>
+    <div class="chip">{{relatedObject.type}}</div>
+  </p>
+{{/each}}
+
+{{#each model.sourceRelationshipObjects as |relatedObject|}}
+  <p>
+    <div class="chip">{{relatedObject.type}}</div>
+  </p>
+{{/each}}--}}
+
+</div>

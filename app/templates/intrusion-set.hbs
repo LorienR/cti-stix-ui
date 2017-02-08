@@ -1,0 +1,97 @@
+<div class="container">
+{{help-card help=model.help}}
+
+<h4>
+ <img class='stix-icon' src='{{get-stix-icon-url "threat-actor"}}'>
+  Intrusion Set
+</h4>
+
+<div class="row">
+  <div class="col">
+    <div class="option-button-column-left">
+        {{#link-to "intrusion-set-edit" model.item.id title="Edit" class="btn waves-effect waves-light"}}
+          <i class="fa fa-pencil"></i><span class="fa-button-text">Edit</span>
+        {{/link-to}}
+      </div>
+      <div class="option-button-column-left">
+        {{#link-to (query-params onDeleteNavigateTo='intrusion-sets') title="Delete" class="btn waves-effect waves-light red"}}
+          <i class="fa fa-trash"></i><span class="fa-button-text">Delete</span>
+        {{/link-to}}
+      </div>
+  </div>
+</div> 
+
+{{#md-card id=model.item.id}}
+    {{#md-card-content}}
+
+      <div class="row">
+        <div class="col">
+          <label>Name</label>
+          <p>{{model.item.name}}</p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col s4 m4">
+          <label>First Seen</label>
+          <p>{{moment-format model.item.first_seen "YYYY-MM-DD"}}</p>
+        </div>
+        <div class="col s4 m4">
+          <label>Last Seen</label>
+          <p>{{moment-format model.item.last_seen "YYYY-MM-DD"}}</p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <label>Primary Motivation</label>
+          <p>{{model.item.primary_motivation}}</p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <label>Goals</label>
+          <p>{{model.item.goals}}</p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <label>Resource Level</label>
+          <p>{{model.item.resource_level}}</p>
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="col">
+          <label>Description</label>
+          <p>{{model.item.description}}</p>
+        </div>
+      </div>
+
+    {{/md-card-content}}
+{{/md-card}}
+<div class="right-align grey-text">{{model.item.id}}</div>
+
+<h4>Relationships</h4>
+{{#each model.targetRelationshipObjects as |relatedObject|}}
+  <p>
+    <div class="chip">{{relatedObject.type}}</div>
+    {{#link-to relatedObject.type relatedObject.id}}
+      {{relatedObject.name}}
+    {{/link-to}}
+  </p>
+{{/each}}
+
+{{#each model.sourceRelationshipObjects as |relatedObject|}}
+  <p>
+    <div class="chip">{{relatedObject.type}}</div>
+    {{#link-to relatedObject.type relatedObject.id}}
+      {{relatedObject.name}}
+    {{/link-to}}
+  </p>
+{{/each}}
+
+</div>
