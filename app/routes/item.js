@@ -48,8 +48,23 @@ export default Ember.Route.extend({
         const store = this.get("store");
         relationships.forEach(function (relationship) {
             const ref = relationship.get(referenceField);
+            const external_ref_array = relationship.get('external_references');
+            const relationship_id = relationship.get('id');
+            const relationship_type = relationship.get('relationship_type');
             const refType = ref.split("--")[0];
+            //const promise = store.findRecord(refType, ref);
             const promise = store.findRecord(refType, ref);
+            const hash = promise;
+            promise.then(function(){
+                console.log('printing refobject');
+                hash.set("related_external_references",external_ref_array);
+                hash.set("relationship_id",relationship_id);
+                hash.set("relationship_type",relationship_type);
+            });
+            
+           
+//I need to add the external references from the relationships to the item that is being built
+
             promises.push(promise);
         });
 

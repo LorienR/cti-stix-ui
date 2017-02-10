@@ -77,21 +77,27 @@
 
 <h4>Relationships</h4>
 {{#each model.targetRelationshipObjects as |relatedObject|}}
-  <p>
+  <h3>
     <div class="chip">{{relatedObject.type}}</div>
     {{#link-to relatedObject.type relatedObject.id}}
       {{relatedObject.name}}
     {{/link-to}}
-  </p>
+  </h3>
+  {{#each relatedObject.related_external_references as |externalObject|}}
+    {{externalObject.external_id}} {{externalObject.source_name}} {{externalObject.url}}
+  {{/each}}
 {{/each}}
 
 {{#each model.sourceRelationshipObjects as |relatedObject|}}
   <p>
-    <div class="chip">{{relatedObject.type}}</div>
+    <div class="chip">{{relatedObject.name}}</div>
     {{#link-to relatedObject.type relatedObject.id}}
       {{relatedObject.name}}
     {{/link-to}}
   </p>
+  {{#each relatedObject.related_external_references as |externalObject|}}
+    {{externalObject.external_id}} {{externalObject.source_name}} {{externalObject.url}}
+  {{/each}}
 {{/each}}
 
 </div>

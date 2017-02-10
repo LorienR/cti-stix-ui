@@ -77,24 +77,36 @@ export default Ember.Controller.extend(AddRemoveExternalReferences, AddRemoveLab
      */
     saveRelationships(record, relatedRecords) {
         if (relatedRecords) {
-            const id = record.get("id");
+            const recordId = record.id;
             relatedRecords.forEach((relatedRecord) => {
+                const refType = relatedRecord.get("id").split("--")[0];
                 const relatedRecordType = relatedRecord.get("type");
-                if (relatedRecordType === "threat-actor") {
+                const relationshipID = relatedRecord.get("relationship_id");
+                
+                const relatedRecordID = relatedRecord.get("id");
+                if (refType === "threat-actor") {
                     const relationshipObject = {
                         relationship_type: "attributed-to",
-                        source_ref: id,
+                        source_ref: recordId,
                         target_ref: relatedRecord.get("id")
                     };
                     this.saveRelationship(relationshipObject);
-                } else if (relatedRecordType === "attack-pattern") {
-                    const relationshipObject = {
-                        relationship_type: "uses",
-                        source_ref: id,
-                        target_ref: relatedRecord.get("id")
-                    };
-                    this.saveRelationship(relationshipObject);
-                } else if (relatedRecordType === "identity") {
+                } else if (refType === "attack-pattern") {
+                    //If relationshipID, then edit the relationship
+                    if (relationshipID){
+                        this.editRelationship(relatedRecord);
+                    } else {
+                    //IF no relationshipID, then a new relationship    
+                        const relationshipObject = {
+                            relationship_type: "uses",
+                            source_ref: recordId,
+                            target_ref: relatedRecordID,
+                            external_references: relatedRecord.get("related_external_references"),
+                        };
+                        this.saveRelationship(relationshipObject);
+                    }
+
+                } else if (refType === "identity") {
                     const relationshipObject = {
                         relationship_type: "targets",
                         source_ref: id,
@@ -121,6 +133,26 @@ export default Ember.Controller.extend(AddRemoveExternalReferences, AddRemoveLab
         const relationship = store.createRecord("relationship", relationshipObject);
         relationship.save();
     },
+    editRelationship(object) {
+        console.log("edit relationship");
+        console.log(object);
+        const relationshipObject = {
+            external_references: object.get("related_external_references"),
+        };
+        let self = this;
+        let store = this.get("store");
+        const id = object.get("relationship_id");
+        var json = JSON.stringify(relationshipObject);
+        this.get('ajax').request('https://localhost/cti-stix-store-api/relationships/' + id, {
+            method: 'PATCH',
+            data: JSON.parse(json)
+        }).then(function() {
+            self.get('notifications').success('Save complete.');
+        }).catch(function(error) {
+            console.log(error);
+        }); 
+
+    },
 
     /**
      * Save Item and Relationships
@@ -129,6 +161,28 @@ export default Ember.Controller.extend(AddRemoveExternalReferences, AddRemoveLab
      * @return {undefined}
      */
     saveItem(item) {
+
+        const attackPatterns = this.get("model.attackPatterns");
+        const threatActors = this.get("model.threatActors");
+        const identities = this.get("model.identities");
+
+        let self = this;
+        let store = this.get("store");
+        const id = this.get("model.item.id");
+        var json = JSON.stringify(item);
+        this.get('ajax').request('https://localhost/cti-stix-store-api/intrusion-sets/' + item.id, {
+            method: 'PATCH',
+            data: JSON.parse(json)
+        }).then(function(savedRecord) {
+            self.get('notifications').success('Save complete.');
+            self.saveRelationships(savedRecord, attackPatterns);
+            self.transitionToRoute("intrusion-sets");
+            
+        }).catch(function(error) {
+            console.log(error);
+        }); 
+            
+/*
         const attackPatterns = this.get("model.attackPatterns");
         const threatActors = this.get("model.threatActors");
         const identities = this.get("model.identities");
@@ -153,6 +207,7 @@ export default Ember.Controller.extend(AddRemoveExternalReferences, AddRemoveLab
             };
             self.set("model.alert", alert);
         });
+        */
     },
 
     actions: {
@@ -165,43 +220,7 @@ export default Ember.Controller.extend(AddRemoveExternalReferences, AddRemoveLab
          * @returns {undefined}
          */
         save(item) {
-            let self = this;
-            let store = this.get("store");
-            const id = this.get("model.item.id");
-                            
-            const promise = store.findRecord('intrusion-set',id).then(function(post){
-                console.log(post.get('name'));
-                post.get('id');
-                post.set('name','blahblahblah');
-                post.save();
-            });
-
-            promise.then(function(){
-                console.log('success');
-
-            }).catch(function(error){
-                console.log(error);
-            });
-            //let lodash = self.get('lodash')
-            /**
-            const attackPatterns = this.get("model.attackPatterns");
-            var json = JSON.stringify(item);
-            this.get('ajax').request('https://localhost/cti-stix-store-api/intrusion-sets/' + item.id, {
-                method: 'PATCH',
-                data: JSON.parse(json)
-            }).then(function(record) {
-                self.get('notifications').success('Save complete.');
- 
-                let promise = store.findRecord("attack-patterns", record.id);
-                promise.then(function(savedRecord){
-                    self.saveRelationships(savedRecord, attackPatterns);
-                });
-                
-                
-            }).catch(function(error) {
-                console.log(error);
-            }); */
-            
+            this.saveItem(item);
 
         },
 

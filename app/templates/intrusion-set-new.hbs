@@ -58,7 +58,7 @@
   <h5><img class='stix-icon' src='{{get-stix-icon-url "attack-pattern"}}'> Attack Patterns</h5>
   <div class="row">
 
-    {{select-search-field-external placeholder="Attack Patterns"
+    {{select-search-field-related-external placeholder="select an attack pattern"
                           search=(action "searchAttackPatterns")
                           selections=model.attackPatterns
                           labelField="name"

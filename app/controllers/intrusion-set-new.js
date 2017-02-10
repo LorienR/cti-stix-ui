@@ -88,7 +88,7 @@ export default Ember.Controller.extend({
                     const relationshipObject = {
                         relationship_type: "uses",
                         source_ref: id,
-                        external_references: relatedRecord.get("external_references"),
+                        external_references: relatedRecord.get("related_external_references"),
                         target_ref: relatedRecord.get("id")
                     };
                     this.saveRelationship(relationshipObject);
