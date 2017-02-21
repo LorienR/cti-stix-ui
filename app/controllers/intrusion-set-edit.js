@@ -82,7 +82,7 @@ export default Ember.Controller.extend(AddRemoveExternalReferences, AddRemoveLab
                 const refType = relatedRecord.get("id").split("--")[0];
                 const relatedRecordType = relatedRecord.get("type");
                 const relationshipID = relatedRecord.get("relationship_id");
-                
+
                 const relatedRecordID = relatedRecord.get("id");
                 if (refType === "threat-actor") {
                     const relationshipObject = {
@@ -93,10 +93,10 @@ export default Ember.Controller.extend(AddRemoveExternalReferences, AddRemoveLab
                     this.saveRelationship(relationshipObject);
                 } else if (refType === "attack-pattern") {
                     //If relationshipID, then edit the relationship
-                    if (relationshipID){
+                    if (relationshipID) {
                         this.editRelationship(relatedRecord);
                     } else {
-                    //IF no relationshipID, then a new relationship    
+                        //IF no relationshipID, then a new relationship    
                         const relationshipObject = {
                             relationship_type: "uses",
                             source_ref: recordId,
@@ -147,10 +147,10 @@ export default Ember.Controller.extend(AddRemoveExternalReferences, AddRemoveLab
             method: 'PATCH',
             data: JSON.parse(json)
         }).then(function() {
-            self.get('notifications').success('Save complete.');
+            //self.get('notifications').success('Save complete.');
         }).catch(function(error) {
             console.log(error);
-        }); 
+        });
 
     },
 
@@ -174,40 +174,39 @@ export default Ember.Controller.extend(AddRemoveExternalReferences, AddRemoveLab
             method: 'PATCH',
             data: JSON.parse(json)
         }).then(function(savedRecord) {
-            self.get('notifications').success('Save complete.');
             self.saveRelationships(savedRecord, attackPatterns);
-            self.transitionToRoute("intrusion-sets");
-            
+            self.get('notifications').success('Save complete.');
+            //self.transitionToRoute("intrusion-sets");
         }).catch(function(error) {
             console.log(error);
-        }); 
-            
-/*
-        const attackPatterns = this.get("model.attackPatterns");
-        const threatActors = this.get("model.threatActors");
-        const identities = this.get("model.identities");
-
-        const self = this;
-        const store = this.get("store");
-
-        const record = store.createRecord("intrusion-set", item);
-        const promise = record.save();
-        promise.then((savedRecord) => {
-            self.saveRelationships(savedRecord, attackPatterns);
-            self.saveRelationships(savedRecord, identities);
-            self.saveRelationships(savedRecord, threatActors);
-
-            self.transitionToRoute("intrusion-sets");
         });
 
-        promise.catch(function(error) {
-            var alert = {
-                label: "Save Failed",
-                error: error
-            };
-            self.set("model.alert", alert);
-        });
-        */
+        /*
+                const attackPatterns = this.get("model.attackPatterns");
+                const threatActors = this.get("model.threatActors");
+                const identities = this.get("model.identities");
+
+                const self = this;
+                const store = this.get("store");
+
+                const record = store.createRecord("intrusion-set", item);
+                const promise = record.save();
+                promise.then((savedRecord) => {
+                    self.saveRelationships(savedRecord, attackPatterns);
+                    self.saveRelationships(savedRecord, identities);
+                    self.saveRelationships(savedRecord, threatActors);
+
+                    self.transitionToRoute("intrusion-sets");
+                });
+
+                promise.catch(function(error) {
+                    var alert = {
+                        label: "Save Failed",
+                        error: error
+                    };
+                    self.set("model.alert", alert);
+                });
+                */
     },
 
     actions: {
