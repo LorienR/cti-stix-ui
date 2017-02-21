@@ -38,7 +38,7 @@ export default ItemRoute.extend({
            console.log(results);
            results.forEach(function(result){
 
-               console.log(result);
+               console.log(`result`);
            });
            
         });

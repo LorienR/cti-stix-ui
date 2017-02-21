@@ -30,7 +30,7 @@
         {{md-btn text="Add" action="addExternalReference" actionArg=selection}}
     </div>
     </div>
-      {{#each selection.externalReferences}} as |externalReference|}}
+      {{#each selection.related_external_references as |externalReference|}}
 
   
       <div class="row">
@@ -48,7 +48,7 @@
                    class="col s6"}}
       </div>
 
-      {{md-btn text="Remove" action="removeExternalReference" actionArg=externalReference}}
+   <!--   {{md-btn text="Remove" action="removeExternalReference" actionArg=externalReference}} -->
 
 
 {{/each}}

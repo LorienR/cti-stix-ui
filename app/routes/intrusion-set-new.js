@@ -43,9 +43,6 @@ export default Ember.Route.extend({
             primary_motiviation: undefined,
             secondary_motiviations: [],
             external_references: [],
-            identities: [],
-            threatActors: [],
-            attackPatterns: [],
             created: new Date(),
             modified: new Date(),
             version: "1"

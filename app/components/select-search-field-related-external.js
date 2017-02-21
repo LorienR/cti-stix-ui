@@ -33,7 +33,7 @@ export default Ember.Component.extend( {
             this.set("selected", undefined);
 
             const selections = this.get("selections");
-            selected.externalReferences=[];
+            selected.related_external_references=[];
             selections.pushObject(selected);
         }
     }),
@@ -63,8 +63,8 @@ export default Ember.Component.extend( {
          * @param {Object} externalReference Object to be removed
          * @returns {undefined}
          */
-        removeExternalReference(externalReference) {
-            const references = this.get("model.item.external_references");
+        removeExternalReference(selection,externalReference) {
+            const references = this.get("selection.related_external_references");
             references.removeObject(externalReference);
         },
         /**
