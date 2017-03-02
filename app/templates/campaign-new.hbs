@@ -31,7 +31,7 @@
   <div class="row">
     {{select-search-field placeholder="Identities"
                           search=(action "searchIdentities")
-                          selections=model.item.identities
+                          selections=model.identities
                           labelField="name"
                           class="col s12"}}
   </div>
@@ -47,7 +47,7 @@
   <div class="row">
     {{select-search-field placeholder="Attack Patterns"
                           search=(action "searchAttackPatterns")
-                          selections=model.item.attackPatterns
+                          selections=model.attackPatterns
                           labelField="name"
                           class="col s12"}}
   </div>
