@@ -4,7 +4,7 @@ import AddRemoveLabels from "../mixins/add-remove-labels";
 
 /**
  * Camoaign Controller responsible for updating records
- * 
+ *
  * @module
  * @extends ember/Controller
  */
@@ -52,7 +52,7 @@ export default Ember.Controller.extend(AddRemoveExternalReferences, AddRemoveLab
     },
 
     /**
-     * Query Threat Actors
+     * Query Intrusion Sets
      *
      * @param {string} searchTerms Search Terms
      * @param {function} resolve Resolve Promise Function
@@ -64,7 +64,24 @@ export default Ember.Controller.extend(AddRemoveExternalReferences, AddRemoveLab
             "filter[where][name][like]": searchTerms,
             "filter[order]": name
         };
-        const promise = store.query("threat-actor", parameters);
+        const promise = store.query("intrusion-set", parameters);
+        promise.then(resolve, reject);
+    },
+
+    /**
+     * Query Indicators
+     *
+     * @param {string} searchTerms Search Terms
+     * @param {function} resolve Resolve Promise Function
+     * @param {function} reject Reject Promise Function
+     */
+    queryIndicators(searchTerms, resolve, reject) {
+        const store = this.get("store");
+        const parameters = {
+            "filter[where][name][like]": searchTerms,
+            "filter[order]": name
+        };
+        const promise = store.query("indicator", parameters);
         promise.then(resolve, reject);
     },
 
@@ -80,7 +97,7 @@ export default Ember.Controller.extend(AddRemoveExternalReferences, AddRemoveLab
             const id = record.get("id");
             relatedRecords.forEach((relatedRecord) => {
                 const relatedRecordType = relatedRecord.get("type");
-                if (relatedRecordType === "threat-actor") {
+                if (relatedRecordType === "intrusion-set") {
                     const relationshipObject = {
                         relationship_type: "attributed-to",
                         source_ref: id,
@@ -129,9 +146,10 @@ export default Ember.Controller.extend(AddRemoveExternalReferences, AddRemoveLab
      * @return {undefined}
      */
     saveItem(item) {
-        const attackPatterns = this.get("model.attackPatterns");
-        const intrusionSets = this.get("model.intrusionSets");
-        const identities = this.get("model.identities");
+        const attackPatterns = item.attackPatterns;
+        const intrusionSets = item.intrusionSets;
+        const identities = item.identities;
+        const indicators = item.indicators;
 
         const self = this;
         const store = this.get("store");
@@ -142,6 +160,8 @@ export default Ember.Controller.extend(AddRemoveExternalReferences, AddRemoveLab
             self.saveRelationships(savedRecord, attackPatterns);
             self.saveRelationships(savedRecord, identities);
             self.saveRelationships(savedRecord, intrusionSets);
+
+            self.saveIndicators(savedRecord, indicators);
 
             self.transitionToRoute("campaigns");
         });
@@ -159,7 +179,7 @@ export default Ember.Controller.extend(AddRemoveExternalReferences, AddRemoveLab
 
         /**
          * Save Item to Store
-         * 
+         *
          * @function actions:save
          * @param {Object} item Object to be created
          * @returns {undefined}
@@ -204,6 +224,19 @@ export default Ember.Controller.extend(AddRemoveExternalReferences, AddRemoveLab
             const debounceDelay = this.get("debounceDelay");
             return new Ember.RSVP.Promise((resolve, reject) => {
                 Ember.run.debounce(this, this.queryIdentities, searchTerms, resolve, reject, debounceDelay);
+            });
+        },
+
+        /**
+         * Search Indicators Action Handler
+         *
+         * @param {string} searchTerms Search Terms
+         * @return {Object} Ember Promise Object
+         */
+        searchIndicators(searchTerms) {
+            const debounceDelay = this.get("debounceDelay");
+            return new Ember.RSVP.Promise((resolve, reject) => {
+                Ember.run.debounce(this, this.queryIndicators, searchTerms, resolve, reject, debounceDelay);
             });
         },
 

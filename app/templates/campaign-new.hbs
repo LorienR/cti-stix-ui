@@ -39,7 +39,7 @@
   <div class="row">
     {{select-search-field placeholder="Intrusion Sets"
                           search=(action "searchIntrusionSets")
-                          selections=model.intrusionSets
+                          selections=model.item.intrusionSets
                           labelField="name"
                           class="col s12"}}
   </div>
@@ -53,7 +53,7 @@
   </div>
 
   <div class="row">
-    {{indicator-pattern-field indicators=model.indicators}}
+    {{indicator-pattern-field indicators=model.item.indicators}}
   </div>
 
   <div class="row">
@@ -62,7 +62,7 @@
                   class="col s12"}}
   </div>
 
-  <div class="row">  
+  <div class="row">
     <div class="col s12 right-align">
       <div class="option-button-column-right">
         <button {{action "save" model.item false}} id="save" class="btn waves-effect waves-light"><i class="fa fa-save"></i><span class="fa-button-text">Save &amp; Close</span></button>
