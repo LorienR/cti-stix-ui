@@ -7,7 +7,8 @@
                 placeholder=placeholder
                 search=search
                 onchange=(action (mut selected)) as |selected|}}
-{{get selected labelField}}
+    {{get selected labelField}}
+    <span>{{get selected helpField}}</span>
 {{/power-select}}
 
 <p>

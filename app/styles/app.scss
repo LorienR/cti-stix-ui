@@ -628,3 +628,20 @@ th.rotate>div>span {
 .toast-warning {
     background-color: #f89406 !important;
 }
+
+/*styling for the help text in the search boxes*/
+
+.ember-power-select-options li span {
+  display: none;
+  overflow: hidden;
+  height: 50px;
+  padding: 0 15px;
+  font-size: 16px;
+  background-color: black;
+  border-radius: 25px;
+  color: #ccc;
+
+  }
+li[aria-current="true"] span {
+ display: inline;
+ }
