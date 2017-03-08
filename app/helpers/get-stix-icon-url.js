@@ -1,5 +1,7 @@
 import Ember from "ember";
 
+
+
 /**
  * Build the URL of icons based on STIX Object Type
  * 
@@ -16,5 +18,20 @@ export default Ember.Helper.helper(function(params) {
     if (ext === "png") {
         basicValue = '';
     }
-    return Ember.String.htmlSafe("/cti-stix-ui/stix-icons/"+ext+"/"+stixType+basicValue+"."+ext);
+
+   /* 
+        fix to issue #77
+        The report page lists icons that related to each of the report types. 
+        however, if a report type does not have a graphic, then its a broken link  
+   */
+    let path  = "/cti-stix-ui/stix-icons/" + ext + "/" + stixType + basicValue + "." + ext;
+    Ember.$.ajax({
+        url: path,
+        async: false,
+        error: () => {
+             path = '/cti-stix-ui/stix-icons/svg/ic_help_outline_black_24px.svg';
+        }
+
+    });
+    return Ember.String.htmlSafe(path);
 });
