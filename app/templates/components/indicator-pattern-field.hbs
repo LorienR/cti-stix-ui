@@ -1,3 +1,10 @@
+<div class="col s5">
+    {{md-input label="Indicator Object Value"
+               class="column-input-field"
+               value=selectedObjectValue
+               required=true
+               validate=true}}
+</div>
 <div class="col s3">
   {{#power-select selected=selectedObjectType
                   placeholder="Indicator Object Type"
@@ -15,13 +22,6 @@
                   onchange=(action (mut selectedObjectProperty)) as |selectedObjectProperty|}}
     {{selectedObjectProperty.label}}
   {{/power-select}}
-</div>
-<div class="col s5">
-  {{md-input label="Indicator Object Value"
-             class="column-input-field"
-             value=selectedObjectValue
-             required=true
-             validate=true}}
 </div>
 <div class="col s1">
   {{#md-btn buttonType="floating" action="add" isDisabled=addDisabled}}<i class="material-icons">add</i>{{/md-btn}}
