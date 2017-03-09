@@ -13,6 +13,8 @@ export default Ember.Controller.extend({
      * @type {number}
      */
     debounceDelay: 500,
+    isShowingModal: false,
+  isShowingTranslucent: false,
 
     /**
      * Query Attack Patterns
@@ -199,6 +201,14 @@ export default Ember.Controller.extend({
          */
         save(item) {
             this.saveItem(item);
+        },
+
+        close: function() {
+          return this.sendAction()
+        },
+
+        toggleTranslucent() {
+          this.toggleProperty('isShowingTranslucent');
         },
 
         /**

@@ -37,5 +37,23 @@ export default Ember.Route.extend({
 
 
         return Ember.RSVP.hash(model);
-    }
+
+    },
+
+      actions: {
+        openModal: function(modalName) {
+          this.render(modalName, {
+            into: 'application',
+            outlet: 'liquid-modal'
+          });
+          this.controller.set('isShowingTranslucent', true);
+        },
+
+        closeModal: function() {
+          return this.disconnectOutlet({
+            outlet: 'liquid-modal',
+            parentView: 'application'
+          });
+        }
+      }
 });

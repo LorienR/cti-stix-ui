@@ -28,6 +28,19 @@
     </div>
   </div>
 
+<button {{action "openModal" "identity-new"}}> View Artice</button>
+    <button {{action 'toggleTranslucent'}}>toggle</button>
+    {{#if isShowingTranslucent}}
+        {{#modal-dialog close='toggleTranslucent'
+                        translucentOverlay=true}}
+            <h1>Stop! Modal Time!</h1>
+            <p>With Translucent Overlay</p>
+            {{outlet "modal"}}
+            <button {{action 'toggleTranslucent'}}>Close</button>
+        {{/modal-dialog}}
+    {{/if}}
+
+
   <div class="row">
     {{select-search-field placeholder="Identities"
                           search=(action "searchIdentities")
