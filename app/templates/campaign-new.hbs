@@ -28,17 +28,16 @@
     </div>
   </div>
 
-<button {{action "openModal" "identity-new"}}> View Artice</button>
+<button {{action "openModal" "identity-content"}}> View Artice</button>
     <button {{action 'toggleTranslucent'}}>toggle</button>
     {{#if isShowingTranslucent}}
         {{#modal-dialog close='toggleTranslucent'
                         translucentOverlay=true}}
-            <h1>Stop! Modal Time!</h1>
-            <p>With Translucent Overlay</p>
             {{outlet "modal"}}
-            <button {{action 'toggleTranslucent'}}>Close</button>
+            <button {{action 'toggleTranslucent'}}>Close</button> <button {{action 'saveModal'}}>Save</button>
         {{/modal-dialog}}
     {{/if}}
+    {{outlet "identity-modal"}}
 
 
   <div class="row">

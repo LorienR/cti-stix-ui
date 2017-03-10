@@ -13,8 +13,13 @@ export default Ember.Controller.extend({
      * @type {number}
      */
     debounceDelay: 500,
-    isShowingModal: false,
-  isShowingTranslucent: false,
+
+    /**
+    *Is Showing Translucent - modal helper
+    *
+    *@type {boolean}
+    */
+    isShowingTranslucent: false,
 
     /**
      * Query Attack Patterns

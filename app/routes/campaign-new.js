@@ -43,11 +43,16 @@ export default Ember.Route.extend({
       actions: {
         openModal: function(modalName) {
           this.render(modalName, {
-            into: 'application',
-            outlet: 'liquid-modal'
+            into: 'campaign-new',
+            outlet: 'modal'
           });
           this.controller.set('isShowingTranslucent', true);
         },
+
+        saveModal: function() {
+            this.controllerFor('identity-new').send('save', this.currentModel.get('identity_model'), false);
+            this.controller.set('isShowingTranslucent', false);
+          },
 
         closeModal: function() {
           return this.disconnectOutlet({

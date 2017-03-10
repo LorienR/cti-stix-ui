@@ -2,14 +2,14 @@ import Ember from 'ember';
 
 /**
  * Identity New Route sets initial model for creating new records
- * 
+ *
  * @module
  * @extends ember/Route
  */
 export default Ember.Route.extend({
     /**
      * Model sets initial model for creating new records
-     * 
+     *
      * @return {Object} Promise Object
      */
     model() {
@@ -70,5 +70,13 @@ export default Ember.Route.extend({
         };
 
         return Ember.RSVP.hash(hash);
+    },
+    renderTemplate: function(controller, model) {
+      this.render('identity-new');
+
+      this.render('identity-content', {
+          into: 'identity-new',
+          outlet: 'content'
+      });
     }
 });
