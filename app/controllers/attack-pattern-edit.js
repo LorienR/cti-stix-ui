@@ -45,7 +45,7 @@ export default Ember.Controller.extend(AddRemoveExternalReferences, AddRemoveKil
             lodash.remove(killChains, function(obj) { return !obj.kill_chain_name || !obj.phase_name; });
 
             var json = JSON.stringify(item);
-            this.get('ajax').request('https://localhost/cti-stix-store-api/attack-patterns/' + item.id, {
+            this.get('ajax').request('cti-stix-store-api/attack-patterns/' + item.id, {
                 method: 'PATCH',
                 data: JSON.parse(json)
             }).then(function() {

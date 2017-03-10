@@ -143,7 +143,7 @@ export default Ember.Controller.extend(AddRemoveExternalReferences, AddRemoveLab
         let store = this.get("store");
         const id = object.get("relationship_id");
         var json = JSON.stringify(relationshipObject);
-        this.get('ajax').request('https://localhost/cti-stix-store-api/relationships/' + id, {
+        this.get('ajax').request('cti-stix-store-api/relationships/' + id, {
             method: 'PATCH',
             data: JSON.parse(json)
         }).then(function() {
@@ -170,7 +170,7 @@ export default Ember.Controller.extend(AddRemoveExternalReferences, AddRemoveLab
         let store = this.get("store");
         const id = this.get("model.item.id");
         var json = JSON.stringify(item);
-        this.get('ajax').request('https://localhost/cti-stix-store-api/intrusion-sets/' + item.id, {
+        this.get('ajax').request('cti-stix-store-api/intrusion-sets/' + item.id, {
             method: 'PATCH',
             data: JSON.parse(json)
         }).then(function(savedRecord) {

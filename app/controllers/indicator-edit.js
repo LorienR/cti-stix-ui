@@ -39,7 +39,7 @@ export default Ember.Controller.extend(AddRemoveExternalReferences, AddRemoveKil
 
             ///option 4
             var json = JSON.stringify(item);
-            this.get('ajax').request('https://localhost/cti-stix-store-api/indicators/' + item.id, {
+            this.get('ajax').request('cti-stix-store-api/indicators/' + item.id, {
                 method: 'PATCH',
                 data: JSON.parse(json)
             }).then(function() {
