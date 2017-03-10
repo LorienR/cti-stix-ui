@@ -170,7 +170,7 @@ export default Ember.Controller.extend(AddRemoveExternalReferences, AddRemoveLab
             //let lodash = self.get('lodash');
 
             var json = JSON.stringify(item);
-            this.get('ajax').request('https://localhost/cti-stix-store-api/campaigns/' + item.id, {
+            this.get('ajax').request('cti-stix-store-api/campaigns/' + item.id, {
                 method: 'PATCH',
                 data: JSON.parse(json)
             }).then(function() {

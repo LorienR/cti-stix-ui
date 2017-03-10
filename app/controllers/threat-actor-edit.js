@@ -46,7 +46,7 @@ export default Ember.Controller.extend(AddRemoveExternalReferences, AddRemoveAli
             lodash.remove(aliases, function(obj) { return !obj.name; });
 
             var json = JSON.stringify(item);
-            this.get('ajax').request('https://localhost/cti-stix-store-api/threat-actors/' + item.id, {
+            this.get('ajax').request('cti-stix-store-api/threat-actors/' + item.id, {
                 method: 'PATCH',
                 data: JSON.parse(json)
             }).then(function() {
