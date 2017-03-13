@@ -10,14 +10,14 @@
 {{get selected labelField}}
 {{/power-select}}
 
-<p>
+{{!--<p>
   {{#each selections as |selection|}}
     <span class="chip">
       {{get selection labelField}}
       {{fa-icon "times" class="pointer" click=(action "removeSelection" selection)}}
     </span>
   {{/each}}
-</p>
+</p>--}}
 
 {{#each selections as |selection|}}
 

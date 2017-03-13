@@ -29,15 +29,15 @@
   </div>
 
   <div class="row">
-    {{select-search-field placeholder="Identities"
+    {{select-search-field-related-external placeholder="Identities"
                           search=(action "searchIdentities")
-                          selections=model.item.identities
+                          selections=model.identities
                           labelField="name"
                           class="col s12"}}
   </div>
 
   <div class="row">
-    {{select-search-field placeholder="Intrusion Sets"
+    {{select-search-field-related-external placeholder="Intrusion Sets"
                           search=(action "searchIntrusionSets")
                           selections=model.intrusionSets
                           labelField="name"
@@ -45,9 +45,9 @@
   </div>
 
   <div class="row">
-    {{select-search-field placeholder="Attack Patterns"
+    {{select-search-field-related-external placeholder="Attack Patterns"
                           search=(action "searchAttackPatterns")
-                          selections=model.item.attackPatterns
+                          selections=model.attackPatterns
                           labelField="name"
                           class="col s12"}}
   </div>
