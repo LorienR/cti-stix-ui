@@ -191,7 +191,6 @@ export default Ember.Controller.extend(AddRemoveExternalReferences, AddRemoveLab
             self.saveRelationships(savedRecord, threatActors);
 
             self.get('notifications').success('Save complete.');
-            //self.transitionToRoute("intrusion-sets");
         }).catch(function(error) {
             console.log(error);
         });

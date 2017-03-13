@@ -71,7 +71,7 @@
 <div class="right-align grey-text">{{model.item.id}}</div>
 
 <h4>Relationships</h4>
-{{#each model.targetRelationshipObjects as |relatedObject|}}
+{{#each sortedTargetRelationshipObjects as |relatedObject|}}
   {{stix-object-item objectType=relatedObject.type
                      objectId=relatedObject.id
                      objectName=relatedObject.name
@@ -79,7 +79,7 @@
                      label=relatedObject.name
                      class="paragraph-block"}}
 {{/each}}
-{{#each model.sourceRelationshipObjects as |relatedObject|}}
+{{#each sortedSourceRelationshipObjects as |relatedObject|}}
   {{stix-object-item objectType=relatedObject.type
                      objectId=relatedObject.id
                      objectName=relatedObject.name

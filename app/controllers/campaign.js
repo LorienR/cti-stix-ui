@@ -9,5 +9,7 @@ import DeleteObjectAction from "../mixins/delete-object-action";
  */
 
 export default Ember.Controller.extend(DeleteObjectAction, {
-
+    relationshipSorting: ['relationship_type: asc', 'name:asc'],
+    sortedSourceRelationshipObjects: Ember.computed.sort('model.sourceRelationshipObjects', 'relationshipSorting'),
+    sortedTargetRelationshipObjects: Ember.computed.sort('model.targetRelationshipObjects', 'relationshipSorting')
 });
