@@ -130,7 +130,6 @@ export default Ember.Controller.extend({
         const attackPatterns = this.get("model.attackPatterns");
         const threatActors = this.get("model.threatActors");
         const identities = this.get("model.identities");
-        //const relationships = attackPatterns.concat(threatActors, identities);
 
         const self = this;
         const store = this.get("store");
@@ -138,7 +137,6 @@ export default Ember.Controller.extend({
         const record = store.createRecord("intrusion-set", item);
         const promise = record.save();
         promise.then((savedRecord) => {
-            //self.saveRelationships(savedRecord, relationships);
             self.saveRelationships(savedRecord, attackPatterns);
             self.saveRelationships(savedRecord, identities);
             self.saveRelationships(savedRecord, threatActors);
