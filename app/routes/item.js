@@ -7,10 +7,7 @@ import Ember from 'ember';
  * @extends ember/Route
  */
 
-var inject = Ember.inject;
-
 export default Ember.Route.extend({
-    lodash: inject.service(),
     /**
      * Get Item Model hash of Promise objects with source and target Relationships
      *
@@ -19,9 +16,6 @@ export default Ember.Route.extend({
      * @return {Object} hash of key and Promise objects
      */
     getItemModel(parameters, type) {
-        let self = this;
-        let lodash = self.get('lodash');
-
         const store = this.get("store");
         const hash = {};
         hash.item = store.findRecord(type, parameters.id);
@@ -69,7 +63,6 @@ export default Ember.Route.extend({
             const relationship_id = relationship.get('id');
             const relationship_type = relationship.get('relationship_type');
             const refType = ref.split("--")[0];
-            //const promise = store.findRecord(refType, ref);
             const promise = store.findRecord(refType, ref);
             const hash = promise;
             promise.then(function() {
@@ -77,7 +70,6 @@ export default Ember.Route.extend({
                 hash.set("relationship_id", relationship_id);
                 hash.set("relationship_type", relationship_type);
             });
-
 
             //I need to add the external references from the relationships to the item that is being built
 
