@@ -15,7 +15,7 @@ export default Ember.Route.extend({
     model() {
         const hash = {};
         hash.help = {
-            description: "An identity can represent actual individuals, organizaitons or groups as well as classes of individuals, " +
+            description: "An identity can represent actual individuals, organizations or groups as well as classes of individuals, " +
                 "organizations or groups."
         };
         hash.identity_class = [

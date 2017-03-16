@@ -8,7 +8,7 @@
   <div class="row">
     <div class="col s12 m9">
       {{md-input label="Name"
-                 value=model.item.name
+                 value=model.item.campaign_name
                  required=true
                  validate=true}}
     </div>
@@ -28,24 +28,27 @@
     </div>
   </div>
 
-<button {{action "openModal" "identity-content"}}> View Artice</button>
-    <button {{action 'toggleTranslucent'}}>toggle</button>
     {{#if isShowingTranslucent}}
         {{#modal-dialog close='toggleTranslucent'
+                        targetAttachment='none'
+                        container-class='centered-scrolling-container'
+                        overlay-class='centered-scrolling-overlay'
+                        wrapper-class='centered-scrolling-wrapper'
                         translucentOverlay=true}}
             {{outlet "modal"}}
-            <button {{action 'toggleTranslucent'}}>Close</button> <button {{action 'saveModal'}}>Save</button>
+            <button {{action 'toggleTranslucent'}}>Close</button> <button {{action 'saveModal' model.item}}>Save</button>
         {{/modal-dialog}}
     {{/if}}
     {{outlet "identity-modal"}}
 
 
   <div class="row">
-    {{select-search-field placeholder="Identities"
+    {{select-search-field-create placeholder="Identities"
                           search=(action "searchIdentities")
                           selections=model.item.identities
                           labelField="name"
                           helpField="description"
+                           oncreate=(action 'openModal' 'identity-content')
                           class="col s12"}}
   </div>
 
@@ -73,7 +76,7 @@
 
   <div class="row">
     {{md-textarea label="Description"
-                  value=model.item.description
+                  value=model.item.campaign_description
                   class="col s12"}}
   </div>
 

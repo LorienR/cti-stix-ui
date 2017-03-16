@@ -137,6 +137,8 @@ export default Ember.Controller.extend({
         const intrusionSets = item.intrusionSets;
         const identities = item.identities;
         const indicators = item.indicators;
+        item.name = item.campaign_name;
+        item.description = item.campaign_description;
 
         const self = this;
         const store = this.get("store");
@@ -208,8 +210,9 @@ export default Ember.Controller.extend({
             this.saveItem(item);
         },
 
-        close: function() {
-          return this.sendAction()
+        openModal: function(content, term) {
+          this.set('model.item.name', term);
+          this.get('target').send('openModal', content);
         },
 
         toggleTranslucent() {
