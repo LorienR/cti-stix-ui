@@ -69,23 +69,6 @@ export default Ember.Controller.extend(AddRemoveExternalReferences, AddRemoveLab
     },
 
     /**
-     * Query Indicators
-     *
-     * @param {string} searchTerms Search Terms
-     * @param {function} resolve Resolve Promise Function
-     * @param {function} reject Reject Promise Function
-     */
-    queryIndicators(searchTerms, resolve, reject) {
-        const store = this.get("store");
-        const parameters = {
-            "filter[where][name][like]": searchTerms,
-            "filter[order]": name
-        };
-        const promise = store.query("indicator", parameters);
-        promise.then(resolve, reject);
-    },
-
-    /**
      * Save Relationships
      *
      * @param {Object} record Record
@@ -187,10 +170,9 @@ export default Ember.Controller.extend(AddRemoveExternalReferences, AddRemoveLab
      * @return {undefined}
      */
     saveItem(item) {
-        const attackPatterns = item.attackPatterns;
-        const intrusionSets = item.intrusionSets;
-        const identities = item.identities;
-        const indicators = item.indicators;
+        const attackPatterns = this.get("model.attackPatterns");
+        const intrusionSets = this.get("model.intrusionSets");
+        const identities = this.get("model.identities");
 
         const self = this;
         const store = this.get("store");
@@ -250,20 +232,7 @@ export default Ember.Controller.extend(AddRemoveExternalReferences, AddRemoveLab
         },
 
         /**
-         * Search Indicators Action Handler
-         *
-         * @param {string} searchTerms Search Terms
-         * @return {Object} Ember Promise Object
-         */
-        searchIndicators(searchTerms) {
-            const debounceDelay = this.get("debounceDelay");
-            return new Ember.RSVP.Promise((resolve, reject) => {
-                Ember.run.debounce(this, this.queryIndicators, searchTerms, resolve, reject, debounceDelay);
-            });
-        },
-
-        /**
-         * Search Threat Actors Action Handler
+         * Search Intrusion Sets Action Handler
          *
          * @param {string} searchTerms Search Terms
          * @return {Object} Ember Promise Object

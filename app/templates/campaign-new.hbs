@@ -40,7 +40,7 @@
   <div class="row">
     {{select-search-field-related-external placeholder="Intrusion Sets"
                           search=(action "searchIntrusionSets")
-                          selections=model.item.intrusionSets
+                          selections=model.intrusionSets
                           labelField="name"
                           helpField="description"
                           class="col s12"}}
@@ -56,7 +56,7 @@
   </div>
 
   <div class="row">
-    {{indicator-pattern-field indicators=model.item.indicators}}
+    {{indicator-pattern-field indicators=model.indicators}}
   </div>
 
   <div class="row">

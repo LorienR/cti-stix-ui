@@ -126,10 +126,9 @@ export default Ember.Controller.extend({
      * @return {undefined}
      */
     saveItem(item) {
-        const attackPatterns = item.attackPatterns;
-        const intrusionSets = item.intrusionSets;
-        const identities = item.identities;
-        const indicators = item.indicators;
+        const attackPatterns = this.get("model.attackPatterns");
+        const intrusionSets = this.get("model.intrusionSets");
+        const identities = this.get("model.identities");
 
         const self = this;
         const store = this.get("store");
@@ -141,7 +140,7 @@ export default Ember.Controller.extend({
             self.saveRelationships(savedRecord, identities);
             self.saveRelationships(savedRecord, intrusionSets);
 
-            self.saveIndicators(savedRecord, indicators);
+            self.saveIndicators(savedRecord);
             self.transitionToRoute("campaigns");
         });
 
@@ -159,12 +158,13 @@ export default Ember.Controller.extend({
      *
      * @param {Object} record Campaign Record
      */
-    saveIndicators(record, indicators) {
+    saveIndicators(record) {
         const target_ref = record.get("id");
         const created = new Date();
         const store = this.get("store");
 
         const self = this;
+        const indicators = this.get("model.indicators");
         indicators.forEach((indicator) => {
             indicator.valid_from = created;
             indicator.created = created;
