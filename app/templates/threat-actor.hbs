@@ -83,16 +83,22 @@
 {{/md-card}}
 <div class="right-align grey-text">{{model.item.id}}</div>
 
-{{#if model.sourceRelationshipObjects}}
 <h4>Relationships</h4>
-{{#each model.sourceRelationshipObjects as |relatedObject|}}
-  <p>
-    <div class="chip">{{relatedObject.type}}</div>
-    {{#link-to relatedObject.type relatedObject.id}}
-      {{relatedObject.name}}
-    {{/link-to}}
-  </p>
+{{#each sortedTargetRelationshipObjects as |relatedObject|}}
+  {{stix-object-item objectType=relatedObject.type
+                     objectId=relatedObject.id
+                     objectName=relatedObject.name
+                     objectDescription=relatedObject.description
+                     label=relatedObject.name
+                     class="paragraph-block"}}
 {{/each}}
-{{/if}}
+{{#each sortedSourceRelationshipObjects as |relatedObject|}}
+  {{stix-object-item objectType=relatedObject.type
+                     objectId=relatedObject.id
+                     objectName=relatedObject.name
+                     objectDescription=relatedObject.description
+                     label=relatedObject.name
+                     class="paragraph-block"}}
+{{/each}}
 
 </div>
