@@ -100,6 +100,7 @@ export default Ember.Route.extend({
           },
 
         closeModal: function() {
+          this.controller.set('isShowingTranslucent', false);
           return this.disconnectOutlet({
             outlet: 'modal',
             parentView: 'campaign-new'

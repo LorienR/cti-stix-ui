@@ -60,6 +60,6 @@ export default Ember.Component.extend({
                 if (entry.get("data.name") === term) {hide = false};
               });
               return hide;
-            },
+            }
     }
 });

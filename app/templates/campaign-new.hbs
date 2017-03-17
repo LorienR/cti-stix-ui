@@ -36,7 +36,7 @@
                         wrapper-class='centered-scrolling-wrapper'
                         translucentOverlay=true}}
             {{outlet "modal"}}
-            <button {{action 'toggleTranslucent'}}>Close</button> <button {{action 'saveModal' model.item}}>Save</button>
+            <button {{action 'closeModal'}}>Close</button> <button {{action 'saveModal' model.item}}>Save</button>
         {{/modal-dialog}}
     {{/if}}
     {{outlet "identity-modal"}}
