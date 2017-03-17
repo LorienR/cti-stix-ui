@@ -1,0 +1,23 @@
+{{#if selected}}
+  {{#if placeholder}}
+    <label>{{placeholder}}</label>
+  {{/if}}
+{{/if}}
+{{#power-select-with-create selected=selected
+                placeholder=placeholder
+                search=search
+                oncreate=oncreate
+                showCreateWhen=(action "hideCreateOptionOnSameName")
+                onchange=(action (mut selected)) as |selected|}}
+    {{get selected labelField}}
+    <span>{{get selected helpField}}</span>
+{{/power-select-with-create}}
+
+<p>
+  {{#each selections as |selection|}}
+    <span class="chip">
+      {{get selection labelField}}
+      {{fa-icon "times" class="pointer" click=(action "removeSelection" selection)}}
+    </span>
+  {{/each}}
+</p>
