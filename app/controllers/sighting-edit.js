@@ -35,7 +35,7 @@ export default Ember.Controller.extend(AddRemoveExternalReferences, AddRemoveKil
             let self = this;
 
             var json = JSON.stringify(item);
-            this.get('ajax').request('https://localhost/cti-stix-store-api/sightings/' + item.id, {
+            this.get('ajax').request('cti-stix-store-api/sightings/' + item.id, {
                 method: 'PATCH',
                 data: JSON.parse(json)
             }).then(function() {

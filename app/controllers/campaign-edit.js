@@ -94,30 +94,53 @@ export default Ember.Controller.extend(AddRemoveExternalReferences, AddRemoveLab
      */
     saveRelationships(record, relatedRecords) {
         if (relatedRecords) {
-            const id = record.get("id");
+            const recordId = record.id;
             relatedRecords.forEach((relatedRecord) => {
+                const refType = relatedRecord.get("id").split("--")[0];
                 const relatedRecordType = relatedRecord.get("type");
-                if (relatedRecordType === "intrusion-set") {
-                    const relationshipObject = {
-                        relationship_type: "attributed-to",
-                        source_ref: id,
-                        target_ref: relatedRecord.get("id")
-                    };
-                    this.saveRelationship(relationshipObject);
+                const relationshipID = relatedRecord.get("relationship_id");
+
+                const relatedRecordID = relatedRecord.get("id");
+                if (refType === "intrusion-set") {
+                    //If relationshipID, then edit the relationship
+                    if (relationshipID) {
+                        this.editRelationship(relatedRecord);
+                    } else {
+                        //IF no relationshipID, then a new relationship
+                        const relationshipObject = {
+                            relationship_type: "attributed-to",
+                            source_ref: recordId,
+                            target_ref: relatedRecord.get("id")
+                        };
+                        this.saveRelationship(relationshipObject);
+                    }
                 } else if (relatedRecordType === "attack-pattern") {
-                    const relationshipObject = {
-                        relationship_type: "uses",
-                        source_ref: id,
-                        target_ref: relatedRecord.get("id")
-                    };
-                    this.saveRelationship(relationshipObject);
+                    //If relationshipID, then edit the relationship
+                    if (relationshipID) {
+                        this.editRelationship(relatedRecord);
+                    } else {
+                        //IF no relationshipID, then a new relationship
+                        const relationshipObject = {
+                            relationship_type: "uses",
+                            source_ref: recordId,
+                            target_ref: relatedRecord.get("id")
+                        };
+                        this.saveRelationship(relationshipObject);
+                    }
+
                 } else if (relatedRecordType === "identity") {
-                    const relationshipObject = {
-                        relationship_type: "targets",
-                        source_ref: id,
-                        target_ref: relatedRecord.get("id")
-                    };
-                    this.saveRelationship(relationshipObject);
+                    //If relationshipID, then edit the relationship
+                    if (relationshipID) {
+                        this.editRelationship(relatedRecord);
+                    } else {
+                        //IF no relationshipID, then a new relationship
+                        const relationshipObject = {
+                            relationship_type: "targets",
+                            source_ref: recordId,
+                            target_ref: relatedRecord.get("id")
+                        };
+                        this.saveRelationship(relationshipObject);
+                    }
                 }
             }, this);
         }
@@ -138,6 +161,24 @@ export default Ember.Controller.extend(AddRemoveExternalReferences, AddRemoveLab
         const relationship = store.createRecord("relationship", relationshipObject);
         relationship.save();
     },
+    editRelationship(object) {
+        const relationshipObject = {
+            external_references: object.get("related_external_references"),
+        };
+        let self = this;
+        let store = this.get("store");
+        const id = object.get("relationship_id");
+        var json = JSON.stringify(relationshipObject);
+        this.get('ajax').request('cti-stix-store-api/relationships/' + id, {
+            method: 'PATCH',
+            data: JSON.parse(json)
+        }).then(function() {
+            //self.get('notifications').success('Save complete.');
+        }).catch(function(error) {
+            console.log(error);
+        });
+
+    },
 
     /**
      * Save Item and Relationships
@@ -153,25 +194,18 @@ export default Ember.Controller.extend(AddRemoveExternalReferences, AddRemoveLab
 
         const self = this;
         const store = this.get("store");
-
-        const record = store.createRecord("campaign", item);
-        const promise = record.save();
-        promise.then((savedRecord) => {
+        const id = this.get("model.item.id");
+        var json = JSON.stringify(item);
+        this.get('ajax').request('cti-stix-store-api/campaigns/' + item.id, {
+            method: 'PATCH',
+            data: JSON.parse(json)
+        }).then(function(savedRecord) {
             self.saveRelationships(savedRecord, attackPatterns);
             self.saveRelationships(savedRecord, identities);
             self.saveRelationships(savedRecord, intrusionSets);
-
-            self.saveIndicators(savedRecord, indicators);
-
-            self.transitionToRoute("campaigns");
-        });
-
-        promise.catch(function(error) {
-            var alert = {
-                label: "Save Failed",
-                error: error
-            };
-            self.set("model.alert", alert);
+            self.get('notifications').success('Save complete.');
+        }).catch(function(error) {
+            console.log(error);
         });
     },
 
@@ -185,19 +219,7 @@ export default Ember.Controller.extend(AddRemoveExternalReferences, AddRemoveLab
          * @returns {undefined}
          */
         save(item) {
-
-            let self = this;
-            //let lodash = self.get('lodash');
-
-            var json = JSON.stringify(item);
-            this.get('ajax').request('https://localhost/cti-stix-store-api/campaigns/' + item.id, {
-                method: 'PATCH',
-                data: JSON.parse(json)
-            }).then(function() {
-                self.get('notifications').success('Save complete.');
-            }).catch(function(error) {
-                console.log(error);
-            });
+            this.saveItem(item);
 
         },
 

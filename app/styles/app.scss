@@ -47,6 +47,10 @@ $unmitigated-color: $none-color;
     clear: both;
 }
 
+.paragraph-block {
+    margin-bottom: 10px;
+}
+
 .button-group {
     margin-bottom: 20px;
 }
@@ -73,6 +77,10 @@ $unmitigated-color: $none-color;
 
 .secondary-content {
     color: $muted-color;
+}
+
+.vertical-center {
+    vertical-align: middle;
 }
 
 // Layout Components
@@ -548,6 +556,37 @@ th.rotate>div>span {
     background-color: $high-color;
 }
 
+
+/**
+ * STIX Icons
+ *
+ */
+
+.stix-object-icon {
+    height: 30px;
+    width: 30px;
+    pointer-events: none;
+}
+
+.stix-object-icon-sm {
+    height: 20px;
+    width: 20px;
+}
+
+.stix-object-icon-switch {
+    cursor: pointer;
+}
+
+.stix-object-icon-switch.unchecked {
+    opacity: 0.2;
+}
+
+span.stix-object-item-label {
+    margin-left: 5px;
+    font-weight: normal;
+    vertical-align: middle;
+}
+
 .stix-icon {
     height: 30px;
     width: 30px;
@@ -561,6 +600,87 @@ th.rotate>div>span {
 .stix-icon-mini {
     height: 20px;
     width: 20px;
+}
+
+$attack-pattern-color: rgb(35, 159, 221);
+.text-malware {
+    color: rgb(146, 11, 11);
+    font-weight: bold;
+}
+
+.text-threat-actor {
+    color: rgb(193, 39, 44);
+    font-weight: bold;
+}
+
+.text-course-of-action {
+    color: rgb(57, 181, 73);
+    font-weight: bold;
+}
+
+.text-indicator {
+    color: rgb(190, 177, 19);
+    font-weight: bold;
+}
+
+.text-identity {
+    color: rgb(100, 100, 100);
+    font-weight: bold;
+}
+
+.text-attack-pattern {
+    color: $attack-pattern-color;
+    font-weight: bold;
+}
+
+.text-tool {
+    color: rgb(104, 5, 6);
+    font-weight: bold;
+}
+
+.text-observable-path {
+    color: #00897b;
+    font-weight: bold;
+}
+
+.text-campaign {
+    color: #006699;
+}
+
+.malware-label {
+    color: rgb(146, 11, 11);
+}
+
+.threat-actor-label {
+    color: rgb(193, 39, 44);
+}
+
+.course-of-action-label {
+    color: rgb(57, 181, 73);
+}
+
+.indicator-label {
+    color: rgb(190, 177, 19);
+}
+
+.identity-label {
+    color: rgb(100, 100, 100);
+}
+
+.attack-pattern-label {
+    color: $attack-pattern-color;
+}
+
+.tool-label {
+    color: rgb(104, 5, 6);
+}
+
+.observable-path-label {
+    color: #00897b;
+}
+
+.campaign-label {
+    color: #006699;
 }
 
 

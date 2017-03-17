@@ -38,7 +38,7 @@ export default Ember.Controller.extend(AddRemoveExternalReferences, AddRemoveLab
             lodash.remove(labels, function(obj) { return !obj.name; });
 
             var json = JSON.stringify(item);
-            this.get('ajax').request('https://localhost/cti-stix-store-api/identities/' + item.id, {
+            this.get('ajax').request('cti-stix-store-api/identities/' + item.id, {
                 method: 'PATCH',
                 data: JSON.parse(json)
             }).then(function() {

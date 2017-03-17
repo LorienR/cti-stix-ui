@@ -17,46 +17,33 @@ export default ItemRoute.extend({
      */
     model(parameters) {
         let hash = this.getItemModel(parameters, "intrusion-set");
-        console.log('item');
-        console.log(hash.item);
         const typePathMapping = {
             attackPatterns: "attack-pattern",
             indicators: "indicators",
             threatActors: "threat-actor",
             identities: "identity"
         };
-        for (var key in typePathMapping){
-            eval("hash."+key+" = [];");
+        for (var key in typePathMapping) {
+            eval("hash." + key + " = [];");
         }
         hash.threatActors = [];
         hash.attackPatterns = [];
         hash.indicators = [];
         hash.identities = [];
 
-        hash.targetRelationshipObjects.then(function(results) {
-           console.log(`targetRelationshipObjects`);
-           console.log(results);
-           results.forEach(function(result){
-
-               console.log(`result`);
-           });
-           
-        });
+        hash.targetRelationshipObjects.then(function(results) {});
         hash.sourceRelationshipObjects.then(function(results) {
-            console.log(`sourceRelationshipObjects`);
-            console.log(results);
-            console.log('print result');
-            results.forEach(function(result){
+            results.forEach(function(result) {
                 const ref = result.get("id");
                 const refType = ref.split("--")[0];
-                for (var key in typePathMapping){
+                for (var key in typePathMapping) {
                     if (refType === typePathMapping[key]) {
-                        eval("hash."+key+".push(result);");
+                        eval("hash." + key + ".push(result);");
                     }
                 }
             });
         });
-        
+
         hash.help = {
             description: "An Intrusion Set is a grouped set of adversarial behaviors and resources with common " +
                 "properties that is believed to be orchestrated by a single organization. An Intrusion Set may " +

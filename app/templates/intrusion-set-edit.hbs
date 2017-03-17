@@ -52,18 +52,20 @@
   </div>
   
 
+  <h5><img class='stix-icon' src='{{get-stix-icon-url "identity"}}'> Identities</h5>
   <div class="row">
-    {{select-search-field placeholder="Identities"
+    {{select-search-field-related-external placeholder="Identities"
                           search=(action "searchIdentities")
-                          selections=model.item.identities
+                          selections=model.identities
                           labelField="name"
                           class="col s12"}}
   </div>
 
+  <h5><img class='stix-icon' src='{{get-stix-icon-url "threat-actor"}}'> Threat Actors</h5>
   <div class="row">
-    {{select-search-field placeholder="Threat Actors"
+    {{select-search-field-related-external placeholder="Threat Actors"
                           search=(action "searchThreatActors")
-                          selections=model.item.threatActors
+                          selections=model.threatActors
                           labelField="name"
                           class="col s12"}}
   </div>

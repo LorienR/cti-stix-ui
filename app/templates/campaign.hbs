@@ -41,46 +41,7 @@
           <p>{{model.item.objective}}</p>
         </div>
       </div>
-
-      <div class="row">
-        <div class="col">
-          <label>Identities</label>
-          <div>
-          {{#if model.item.identities}}
-              {{#each model.item.identities as |identity|}}
-                <div class="chip orange" title="Identity">{{identity.name}}</div>
-              {{/each}}
-          {{/if}}
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col">
-          <label>Intrusion Set</label>
-          <div>
-          {{#if model.item.intrusionSets}}
-              {{#each model.item.intrusionSets as |intrusionSet|}}
-                <div class="chip blue" title="Threat Actor">{{intrusionSet.name}}</div>
-              {{/each}}
-          {{/if}}
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col">
-          <label>Attack Patterns</label>
-          <div>
-          {{#if model.item.attackPatterns}}
-              {{#each model.item.attackPatterns as |attackPattern|}}
-                <div class="chip red" title="Attack Pattern">{{attackPattern.name}}</div>
-              {{/each}}
-          {{/if}}
-          </div>
-        </div>
-      </div>
-
+      
       <div class="row">
         <div class="col">
           <label>Indicators</label>
@@ -105,23 +66,22 @@
 {{/md-card}}
 <div class="right-align grey-text">{{model.item.id}}</div>
 
-{{!--<h4>Relationships</h4>
-{{#each model.targetRelationshipObjects as |relatedObject|}}
-  <p>
-    <div class="chip">{{relatedObject.type}}</div>
-    {{#link-to relatedObject.type relatedObject.id}}
-      {{relatedObject.name}}
-    {{/link-to}}
-  </p>
+<h4>Relationships</h4>
+{{#each sortedTargetRelationshipObjects as |relatedObject|}}
+  {{stix-object-item objectType=relatedObject.type
+                     objectId=relatedObject.id
+                     objectName=relatedObject.name
+                     objectDescription=relatedObject.description
+                     label=relatedObject.name
+                     class="paragraph-block"}}
 {{/each}}
-
-{{#each model.sourceRelationshipObjects as |relatedObject|}}
-  <p>
-    <div class="chip">{{relatedObject.type}}</div>
-    {{#link-to relatedObject.type relatedObject.id}}
-      {{relatedObject.name}}
-    {{/link-to}}
-  </p>
-{{/each}}--}}
+{{#each sortedSourceRelationshipObjects as |relatedObject|}}
+  {{stix-object-item objectType=relatedObject.type
+                     objectId=relatedObject.id
+                     objectName=relatedObject.name
+                     objectDescription=relatedObject.description
+                     label=relatedObject.name
+                     class="paragraph-block"}}
+{{/each}}
 
 </div>

@@ -8,6 +8,14 @@ export default Ember.Service.extend({
 
     }),
 
+    sortBy(array, iterees) {
+        _.sortBy(array, iterees);
+    },
+
+    forEach(collection, iteree) {
+        _.forEach(collection, iteree);
+    },
+
     remove(array, predicate) {
         _.remove(array, predicate);
     },

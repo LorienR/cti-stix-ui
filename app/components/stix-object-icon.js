@@ -44,7 +44,18 @@ export default Ember.Component.extend({
             fileNameExtension = this.get("emptyString");
         }
 
-        const path = `${ENV.rootURL}${iconDirectory}/${iconExtension}/${objectType}${fileNameExtension}.${iconExtension}`;
+        let path = `${ENV.rootURL}${iconDirectory}/${iconExtension}/${objectType}${fileNameExtension}.${iconExtension}`;
+        Ember.$.ajax({
+            url: path,
+            async: false,
+            error: () => {
+                path = `${ENV.rootURL}${iconDirectory}/${iconExtension}/` + "ic_help_outline_black_24px" + `.${iconExtension}`;
+            }
+
+        });
         return Ember.String.htmlSafe(path);
+
+        // const path = `${ENV.rootURL}${iconDirectory}/${iconExtension}/${objectType}${fileNameExtension}.${iconExtension}`;
+        // return Ember.String.htmlSafe(path);
     })
 });
