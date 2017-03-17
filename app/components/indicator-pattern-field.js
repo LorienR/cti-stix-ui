@@ -95,6 +95,21 @@ export default Ember.Component.extend({
     }),
 
     /**
+         * Selected Observer for updating array of selections
+         *
+         * @return {undefined}
+         */
+        selectedObserver: Ember.observer("selected", function() {
+            const selected = this.get("selected");
+            if (selected) {
+                this.set("selected", undefined);
+
+                const indicators = this.get("indicators");
+                indicators.pushObject(selected);
+            }
+        }),
+
+    /**
      * Actions
      *
      * @type {Object}
@@ -103,7 +118,8 @@ export default Ember.Component.extend({
         /**
          * Add
          */
-        add() {
+        add(term) {
+            if (term) {this.set("selectedObjectValue", term);};
             const objectType = this.get("selectedObjectType");
             if (objectType) {
                 const objectProperty = this.get("selectedObjectProperty");
@@ -125,6 +141,22 @@ export default Ember.Component.extend({
                 }
             }
         },
+          hideCreateOptionOnSameName(term) {
+            let existingOption = new Ember.RSVP.Promise((resolve, reject) => {
+                                                 Ember.run.debounce(this, this.newQuery, term, resolve, reject, "indicator", 500);
+                                                 });
+            return !existingOption;
+          },
+
+          findValue(searchTerms) {
+              return new Ember.RSVP.Promise((resolve, reject) => {
+                  Ember.run.debounce(this, this.newQuery, searchTerms, resolve, reject, "indicator", 500);
+              });
+          },
+
+          saveValue(term) {
+            this.set("selectedObjectValue", term);
+            },
 
         /**
          * Remove

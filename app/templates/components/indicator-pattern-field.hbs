@@ -1,9 +1,12 @@
 <div class="col s5">
-    {{md-input label="Indicator Object Value"
-               class="column-input-field"
-               value=selectedObjectValue
-               required=true
-               validate=true}}
+    {{#power-select-with-create
+            selected=selected
+            placeholder="Indicator Object Value"
+            search=search
+            oncreate=(action "add") as |selectedObjectValue|
+    }}
+        {{selectedObjectValue}}
+    {{/power-select-with-create}}
 </div>
 <div class="col s3">
   {{#power-select selected=selectedObjectType

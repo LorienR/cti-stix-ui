@@ -56,7 +56,8 @@
   </div>
 
   <div class="row">
-    {{indicator-pattern-field indicators=model.item.indicators}}
+    {{indicator-pattern-field indicators=model.item.indicators
+                            search=(action "searchIndicators")}}
   </div>
 
   <div class="row">

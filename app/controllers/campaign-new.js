@@ -15,55 +15,22 @@ export default Ember.Controller.extend({
     debounceDelay: 500,
 
     /**
-     * Query Attack Patterns
+     * Query Helper
      *
      * @param {string} searchTerms Search Terms
      * @param {function} resolve Resolve Promise Function
      * @param {function} reject Reject Promise Function
+     * @param {string} queryType
      */
-    queryAttackPatterns(searchTerms, resolve, reject) {
-        const store = this.get("store");
-        const parameters = {
-            "filter[where][name][like]": searchTerms,
-            "filter[order]": name
-        };
-        const promise = store.query("attack-pattern", parameters);
-        promise.then(resolve, reject);
-    },
-
-    /**
-     * Query Identities
-     *
-     * @param {string} searchTerms Search Terms
-     * @param {function} resolve Resolve Promise Function
-     * @param {function} reject Reject Promise Function
-     */
-    queryIdentities(searchTerms, resolve, reject) {
-        const store = this.get("store");
-        const parameters = {
-            "filter[where][name][like]": searchTerms,
-            "filter[order]": name
-        };
-        const promise = store.query("identity", parameters);
-        promise.then(resolve, reject);
-    },
-
-    /**
-     * Query Intrusion Sets
-     *
-     * @param {string} searchTerms Search Terms
-     * @param {function} resolve Resolve Promise Function
-     * @param {function} reject Reject Promise Function
-     */
-    queryIntrusionSets(searchTerms, resolve, reject) {
-        const store = this.get("store");
-        const parameters = {
-            "filter[where][name][like]": searchTerms,
-            "filter[order]": name
-        };
-        const promise = store.query("intrusion-set", parameters);
-        promise.then(resolve, reject);
-    },
+     newQuery(searchTerms, resolve, reject, queryType) {
+             const store = this.get("store");
+             var parameters = {
+                 "filter[where][name][like]": searchTerms,
+                 "filter[order]": name
+             };
+             var promise = store.query(queryType, parameters);
+             promise.then(resolve, reject);
+     },
 
     /**
      * Save Relationships
@@ -210,7 +177,7 @@ export default Ember.Controller.extend({
         searchAttackPatterns(searchTerms) {
             const debounceDelay = this.get("debounceDelay");
             return new Ember.RSVP.Promise((resolve, reject) => {
-                Ember.run.debounce(this, this.queryAttackPatterns, searchTerms, resolve, reject, debounceDelay);
+                Ember.run.debounce(this, this.newQuery, searchTerms, resolve, reject, "attack-pattern", debounceDelay);
             });
         },
 
@@ -223,7 +190,20 @@ export default Ember.Controller.extend({
         searchIdentities(searchTerms) {
             const debounceDelay = this.get("debounceDelay");
             return new Ember.RSVP.Promise((resolve, reject) => {
-                Ember.run.debounce(this, this.queryIdentities, searchTerms, resolve, reject, debounceDelay);
+                Ember.run.debounce(this, this.newQuery, searchTerms, resolve, reject, "identity", debounceDelay);
+            });
+        },
+
+        /**
+         * Search Indicators Action Handler
+         *
+         * @param {string} searchTerms Search Terms
+         * @return {Object} Ember Promise Object
+         */
+        searchIndicators(searchTerms) {
+            const debounceDelay = this.get("debounceDelay");
+            return new Ember.RSVP.Promise((resolve, reject) => {
+                Ember.run.debounce(this, this.newQuery, searchTerms, resolve, reject, "indicator", debounceDelay);
             });
         },
 
@@ -236,7 +216,7 @@ export default Ember.Controller.extend({
         searchIntrusionSets(searchTerms) {
             const debounceDelay = this.get("debounceDelay");
             return new Ember.RSVP.Promise((resolve, reject) => {
-                Ember.run.debounce(this, this.queryIntrusionSets, searchTerms, resolve, reject, debounceDelay);
+                Ember.run.debounce(this, this.newQuery, searchTerms, resolve, reject, "intrusion-set", debounceDelay);
             });
         }
     }
